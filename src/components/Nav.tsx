@@ -6,7 +6,11 @@ const Nav = () => {
           <nav className="border-b border-gray-100 bg-white">
   <div className="container mx-auto px-6 py-4 flex items-center justify-between">
 
-    
+    <img
+      src={Logo}
+      alt=""
+      className="w-32"
+    />
 
     <ul className="flex gap-8 items-center text-sm text-gray-600">
       <li className="text-pink-500 font-medium cursor-pointer">
