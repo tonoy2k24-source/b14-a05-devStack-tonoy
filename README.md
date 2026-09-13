@@ -4,11 +4,11 @@ Dev Stack Builder is a responsive web application that helps developers explore 
 
 ## Live Demo
 
-[Live Demo](#)
+[Live Demo](https://incomparable-cucurucho-9967a0.netlify.app/)
 
 ## GitHub Repository
 
-[GitHub Repository](#)
+[GitHub Repository](https://github.com/tonoy2k24-source/b14-a05-devStack-tonoy)
 
 ## Technologies Used
 
