@@ -34,7 +34,11 @@ const Banner = () => {
       </div>
     </div>
 
-    
+    <img
+      src={Logo}
+      alt=""
+      className="w-full max-w-md mx-auto object-contain"
+    />
 
   </div>
 </section>
