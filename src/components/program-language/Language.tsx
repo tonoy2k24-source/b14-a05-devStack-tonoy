@@ -1,4 +1,5 @@
 import { use, useState } from "react";
+import { toast } from "react-toastify";
 
 type Technology = {
   id: string;
@@ -16,33 +17,49 @@ type LanguageProps = {
 };
 
 const Language = ({ languagePromise }: LanguageProps) => {
-
   const technologies = use(languagePromise);
 
   const [stack, setStack] = useState<Technology[]>([]);
 
-  // ================Add Technology=====================
+  // Add To Stack
   const handleAddToStack = (technology: Technology) => {
-    setStack([...stack, technology]);
-  };
-
-  // ==================Remove One Technology ===================
-  const handleRemove = (id: string) => {
-    const remainingTechnology = stack.filter(
-      (item) => item.id !== id
+    const alreadySelected = stack.some(
+      (item) => item.id === technology.id
     );
 
-    setStack(remainingTechnology);
+    if (alreadySelected) {
+      toast.warning(`${technology.name} is already in your stack`);
+      return;
+    }
+
+    setStack([...stack, technology]);
+
+    toast.success(`${technology.name} added to your stack`);
   };
 
-  // ================= Remove All=========================
+  // Remove One
+  const handleRemove = (id: string) => {
+    const technology = stack.find(
+      (item) => item.id === id
+    );
+
+    setStack(
+      stack.filter((item) => item.id !== id)
+    );
+
+    if (technology) {
+      toast.success(`${technology.name} removed from your stack`);
+    }
+  };
+
+  // Remove All
   const handleRemoveAll = () => {
     setStack([]);
+
+    toast.success("All technologies removed");
   };
 
   return (
-
-    // ================== card section strart====================
     <section className="bg-white py-20">
       <div className="container mx-auto px-6">
 
@@ -50,25 +67,23 @@ const Language = ({ languagePromise }: LanguageProps) => {
         <div className="mb-8">
           <h2 className="text-4xl font-bold text-gray-900">
             Explore the{" "}
-            <span className="text-pink-500">
+            <span className="bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 bg-clip-text text-transparent">
               Technologies
             </span>
           </h2>
 
           <p className="mt-2 text-sm text-gray-500">
-            Pick one technology per category to build your ideal stack.
+            Pick technologies to build your ideal stack.
           </p>
         </div>
 
-
         {/* Main Grid */}
-        <div className="grid grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
 
           {/* Technology Cards */}
-          <div className="col-span-3 grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-3 lg:grid-cols-3">
 
             {technologies.map((technology) => {
-
               const isSelected = stack.some(
                 (item) => item.id === technology.id
               );
@@ -76,13 +91,11 @@ const Language = ({ languagePromise }: LanguageProps) => {
               return (
                 <div
                   key={technology.id}
-                  className={`rounded-xl border p-4 transition
-                    ${
-                      isSelected
-                        ? "border-pink-300 bg-pink-50"
-                        : "border-gray-100 bg-white hover:shadow-md"
-                    }
-                  `}
+                  className={`rounded-xl border p-4 transition duration-200 ${
+                    isSelected
+                      ? "border-pink-300 bg-pink-50"
+                      : "border-gray-100 bg-white hover:border-gray-200 hover:shadow-md"
+                  }`}
                 >
 
                   {/* Icon + Badge */}
@@ -100,18 +113,15 @@ const Language = ({ languagePromise }: LanguageProps) => {
 
                   </div>
 
-
                   {/* Name */}
                   <h3 className="mt-4 text-base font-semibold text-gray-900">
                     {technology.name}
                   </h3>
 
-
                   {/* Description */}
                   <p className="mt-2 h-14 text-xs leading-5 text-gray-500">
                     {technology.description}
                   </p>
-
 
                   {/* Information */}
                   <div className="mt-4 flex items-center justify-between">
@@ -130,21 +140,18 @@ const Language = ({ languagePromise }: LanguageProps) => {
 
                   </div>
 
-
                   {/* Add Button */}
                   <button
                     disabled={isSelected}
                     onClick={() => handleAddToStack(technology)}
-                    className={`mt-4 w-full rounded-lg py-2.5 text-xs font-medium transition
-                      ${
-                        isSelected
-                          ? "cursor-not-allowed bg-gray-300 text-gray-600"
-                          : "cursor-pointer bg-gray-950 text-white hover:bg-pink-500"
-                      }
-                    `}
+                    className={`mt-4 w-full rounded-lg py-2.5 text-xs font-medium transition ${
+                      isSelected
+                        ? "cursor-not-allowed bg-gray-300 text-gray-600"
+                        : "cursor-pointer bg-gray-950 text-white hover:bg-pink-500"
+                    }`}
                   >
                     {isSelected
-                      ? "Selected"
+                      ? "✓ Added to Stack"
                       : "Add to Stack"}
                   </button>
 
@@ -154,29 +161,30 @@ const Language = ({ languagePromise }: LanguageProps) => {
 
           </div>
 
-
           {/* Your Stack */}
           <div>
 
             <div className="sticky top-5 rounded-xl border border-gray-100 bg-white p-5 shadow-sm">
 
               {/* Stack Header */}
-              <h3 className="text-sm font-semibold text-gray-900">
+              <h3 className="text-base font-semibold text-gray-900">
                 Your Stack
               </h3>
-
 
               {/* Selected Count */}
               {stack.length > 0 ? (
                 <p className="mt-1 text-xs text-gray-400">
-                  {stack.length} Technologies Selected
+                  {stack.length}{" "}
+                  {stack.length === 1
+                    ? "Technology"
+                    : "Technologies"}{" "}
+                  Selected
                 </p>
               ) : (
                 <p className="mt-1 text-xs text-gray-400">
                   No technologies selected yet.
                 </p>
               )}
-
 
               {/* Empty State */}
               {stack.length === 0 ? (
@@ -190,14 +198,14 @@ const Language = ({ languagePromise }: LanguageProps) => {
               ) : (
 
                 <>
-                  {/* Selected Technologies */}
+                  {/* Selected Items */}
                   <div className="mt-4 space-y-2">
 
                     {stack.map((technology) => (
 
                       <div
                         key={technology.id}
-                        className="flex items-center justify-between rounded-lg border border-gray-200 px-3 py-2"
+                        className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-3 py-2"
                       >
 
                         {/* Technology Info */}
@@ -221,11 +229,12 @@ const Language = ({ languagePromise }: LanguageProps) => {
 
                         </div>
 
-
                         {/* Remove Button */}
                         <button
-                          onClick={() => handleRemove(technology.id)}
-                          className="cursor-pointer text-2xl font-light text-gray-400 hover:text-red-500"
+                          onClick={() =>
+                            handleRemove(technology.id)
+                          }
+                          className="cursor-pointer text-2xl font-light text-gray-400 transition hover:text-red-500"
                         >
                           ×
                         </button>
@@ -236,11 +245,10 @@ const Language = ({ languagePromise }: LanguageProps) => {
 
                   </div>
 
-
                   {/* Remove All */}
                   <button
                     onClick={handleRemoveAll}
-                    className="mt-12 w-full cursor-pointer rounded-lg border border-red-300 py-2 text-sm font-medium text-red-500 hover:bg-red-50 transition"
+                    className="mt-8 w-full cursor-pointer rounded-lg border border-red-300 py-2.5 text-sm font-medium text-red-500 transition hover:bg-red-50"
                   >
                     Remove All
                   </button>
@@ -253,7 +261,6 @@ const Language = ({ languagePromise }: LanguageProps) => {
           </div>
 
         </div>
-
       </div>
     </section>
   );
