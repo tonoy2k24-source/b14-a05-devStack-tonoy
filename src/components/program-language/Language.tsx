@@ -60,6 +60,8 @@ const Language = ({ languagePromise }: LanguageProps) => {
   };
 
   return (
+
+    // =========== tecnology section strart =======
     <section className="bg-white py-20">
       <div className="container mx-auto px-6">
 
