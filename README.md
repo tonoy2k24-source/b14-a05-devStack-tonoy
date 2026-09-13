@@ -1,32 +1,49 @@
-# React + TypeScript + Vite
+# Dev Stack Builder
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Dev Stack Builder is a responsive web application that helps developers explore different technologies and build their own technology stack. Users can browse technologies, add them to their stack, remove individual technologies, or clear the entire stack.
 
-Currently, two official plugins are available:
+## Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+[Live Demo](#)
 
-## React Compiler
+## GitHub Repository
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+[GitHub Repository](#)
 
-## Expanding the Oxlint configuration
+## Technologies Used
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- React-Toastify
+- JSON
+- JavaScript ES6+
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
+## Features
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+### 1. Explore Technologies
+Users can explore different technologies with their name, category, description, difficulty level, rating, and badge.
+
+### 2. Build Your Own Stack
+Users can add multiple technologies to their personal stack. The same technology cannot be added twice, and already-added technologies are shown as disabled.
+
+### 3. Manage Your Stack
+Users can remove individual technologies from their stack or use the "Remove All" button to clear the entire stack. Toast notifications are shown for important actions.
+
+---
+
+# React Questions & Answers
+
+## 1. What is JSX and why do we use it?
+
+JSX stands for JavaScript XML. It allows us to write HTML-like code inside JavaScript or TypeScript.
+
+We use JSX because it makes React components easier to write and understand.
+
+Example:
+
+```tsx
+const App = () => {
+  return <h1>Hello World</h1>;
+};
